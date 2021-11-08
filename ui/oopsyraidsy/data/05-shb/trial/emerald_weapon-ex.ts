@@ -47,6 +47,7 @@ const triggerSet: OopsyTriggerSet<Data> = {
       run: (data, matches) => {
         data.sphereNitro = data.sphereNitro ?? {};
         data.sphereNitro[matches.target] = true;
+        console.log(`+nitro: ${matches.target}`);
       },
     },
     {
@@ -57,6 +58,7 @@ const triggerSet: OopsyTriggerSet<Data> = {
         // Need to track loss here for the 4/4 strategy.
         data.sphereNitro = data.sphereNitro ?? {};
         data.sphereNitro[matches.target] = false;
+        console.log(`-nitro: ${matches.target}`);
       },
     },
     {
@@ -66,6 +68,7 @@ const triggerSet: OopsyTriggerSet<Data> = {
       run: (data, matches) => {
         data.sphereCeruleum = data.sphereCeruleum ?? {};
         data.sphereCeruleum[matches.target] = true;
+        console.log(`+cerul: ${matches.target}`);
       },
     },
     {
@@ -75,6 +78,7 @@ const triggerSet: OopsyTriggerSet<Data> = {
       run: (data, matches) => {
         data.sphereCeruleum = data.sphereCeruleum ?? {};
         data.sphereCeruleum[matches.target] = false;
+        console.log(`-cerul: ${matches.target}`);
       },
     },
     {
@@ -83,6 +87,8 @@ const triggerSet: OopsyTriggerSet<Data> = {
       netRegex: NetRegexes.ability({ id: '55AE' }),
       condition: (data, matches) => data.sphereNitro?.[matches.target],
       mistake: (data, matches) => {
+        console.log(`FAIL: 55AE has nitro: ${matches.target}`);
+        console.log(JSON.stringify(data.sphereNitro));
         return {
           type: 'fail',
           blame: matches.target,
@@ -103,6 +109,8 @@ const triggerSet: OopsyTriggerSet<Data> = {
       netRegex: NetRegexes.ability({ id: '55AF' }),
       condition: (data, matches) => data.sphereCeruleum?.[matches.target],
       mistake: (data, matches) => {
+        console.log(`FAIL: 55AF has cerul: ${matches.target}`);
+        console.log(JSON.stringify(data.sphereCeruleum));
         return {
           type: 'fail',
           blame: matches.target,
